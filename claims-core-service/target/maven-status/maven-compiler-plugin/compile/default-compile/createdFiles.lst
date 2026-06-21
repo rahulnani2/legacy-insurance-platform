@@ -1,7 +1,0 @@
-com\acme\insurance\claims\web\ClaimController.class
-com\acme\insurance\claims\config\JasyptConfig.class
-com\acme\insurance\claims\repo\ClaimRepository.class
-com\acme\insurance\claims\ClaimsApplication.class
-com\acme\insurance\claims\entity\ClaimEntity.class
-com\acme\insurance\claims\legacy\XStreamClaimArchiver.class
-com\acme\insurance\claims\SmokeRunner.class
