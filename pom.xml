@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.acme.insurance</groupId>
+    <artifactId>legacy-insurance-platform</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>Legacy Insurance Platform (Java 8 Migration Gym)</name>
+
+    <!--
+      DELIBERATELY a plain aggregator parent (NOT spring-boot-starter-parent).
+      This mirrors the common enterprise reactor layout and is itself a migration
+      wrinkle: the Boot BOM is imported per-module, so the Boot 2.x -> 3.x bump
+      is not a one-line parent change.
+    -->
+
+    <modules>
+        <module>shared-domain</module>
+        <module>policy-soap-service</module>
+        <module>claims-core-service</module>
+        <module>admin-web</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- BASELINE: this whole reactor must build green on JDK 8 before you touch anything. -->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <!-- Every version below is pinned old on purpose. See MIGRATION-ANSWER-KEY.md. -->
+        <spring.boot.version>2.7.18</spring.boot.version>
+        <cxf.version>3.5.5</cxf.version>
+        <hibernate.version>5.6.15.Final</hibernate.version>
+        <jaxb.api.version>2.3.1</jaxb.api.version>
+        <jaxb.impl.version>2.3.3</jaxb.impl.version>
+        <jasypt.version>1.9.3</jasypt.version>
+        <jasypt.spring.boot.version>2.1.2</jasypt.spring.boot.version>
+        <xstream.version>1.4.20</xstream.version>
+        <mojarra.version>2.3.9</mojarra.version>
+        <dwr.version>3.0.2-RELEASE</dwr.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.acme.insurance</groupId>
+                <artifactId>shared-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Spring Boot BOM imported here, not inherited from a Boot parent. -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.11.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.3.2</version>
+                </plugin>
+                <!-- Run library/SOAP smoke mains: mvn -pl <module> exec:java -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <!-- Boot the claims service: mvn -pl claims-core-service spring-boot:run -->
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring.boot.version}</version>
+                </plugin>
+                <!-- Serve the WAR (Jetty 9.4 = javax/Java 8): mvn -pl admin-web jetty:run -->
+                <plugin>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-maven-plugin</artifactId>
+                    <version>9.4.53.v20231009</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

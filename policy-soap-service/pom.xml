@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.acme.insurance</groupId>
+        <artifactId>legacy-insurance-platform</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>policy-soap-service</artifactId>
+    <packaging>jar</packaging>
+    <name>Policy SOAP Service (Apache CXF / JAX-WS)</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.acme.insurance</groupId>
+            <artifactId>shared-domain</artifactId>
+        </dependency>
+        <!--
+          LANDMINE [CXF]: CXF 3.5.x is the last javax.* line. CXF 4.x is jakarta.*.
+          Bumping CXF is NOT enough on its own: the javax.jws / javax.xml.ws imports
+          below must move to jakarta, and the rt-frontend artifact id stays the same
+          but transitively pulls jakarta APIs only at 4.x.
+        -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxws</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http-jetty</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <!-- javax JAX-WS/JWS API (removed from JDK at 11, like JAXB). -->
+        <dependency>
+            <groupId>javax.jws</groupId>
+            <artifactId>javax.jws-api</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml.ws</groupId>
+            <artifactId>jaxws-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.acme.insurance.policy.SmokeMain</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

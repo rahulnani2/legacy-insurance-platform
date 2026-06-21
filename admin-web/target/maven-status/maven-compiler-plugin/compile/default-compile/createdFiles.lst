@@ -1,0 +1,4 @@
+com\acme\insurance\admin\bean\ClaimAdminBean.class
+com\acme\insurance\admin\converter\MoneyConverter.class
+com\acme\insurance\admin\bean\PolicyAdminBean.class
+com\acme\insurance\admin\dwr\ClaimLookupRemote.class

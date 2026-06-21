@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.acme.insurance</groupId>
+        <artifactId>legacy-insurance-platform</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>claims-core-service</artifactId>
+    <packaging>jar</packaging>
+    <name>Claims Core Service (Spring Boot 2.x / Hibernate 5 / Jasypt / XStream)</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.acme.insurance</groupId>
+            <artifactId>shared-domain</artifactId>
+        </dependency>
+
+        <!-- Spring Boot 2.7 starters (versions from imported BOM). Boot 2 -> 3 is the
+             umbrella jump that drags javax.* -> jakarta.* across the whole module. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!--
+          LANDMINE [Jasypt]: jasypt-spring-boot 2.1.2 transitively uses jasypt 1.9.x.
+          Flagged incompatible in your POC. On Boot 3 / Java 17 you need
+          jasypt-spring-boot 3.x (Boot 3 compatible) AND jasypt core 1.9.3 still has
+          the javax-crypto assumptions; the @EnableEncryptableProperties wiring and
+          ENC() resolution can break silently if the starter version is not bumped in lockstep.
+        -->
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>${jasypt.spring.boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jasypt</groupId>
+            <artifactId>jasypt</artifactId>
+            <version>${jasypt.version}</version>
+        </dependency>
+
+        <!--
+          LANDMINE [XStream]: 1.4.20. Pre-1.4.x security model + reflection converters
+          trip the stricter module access on Java 17 (Illegal reflective access ->
+          InaccessibleObjectException at runtime). Needs explicit allowTypes / addPermission
+          and often JVM add-opens flags, not just a version bump.
+        -->
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>${xstream.version}</version>
+        </dependency>
+
+        <!--
+          LANDMINE [Hibernate]: pin Hibernate 5.6 explicitly (overrides the Boot-managed
+          version). 5.x is javax.persistence; Hibernate 6 is jakarta.persistence AND
+          changes @Type, dialect resolution, and id-generator defaults.
+        -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

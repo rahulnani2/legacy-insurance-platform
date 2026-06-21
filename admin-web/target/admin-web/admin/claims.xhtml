@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- LANDMINE [JSF]: xhtml uses the old http://java.sun.com/jsf/* namespaces.
+     Jakarta Faces 4 namespaces are http://xmlns.jcp.org/jsf/* (Faces 2.3) then
+     jakarta.faces.* (Faces 4). The h:/f: taglib URIs must change. Also the inline
+     dwr/engine.js + ClaimLookup.describe() call must be replaced with a fetch() to
+     the rewritten REST endpoint. -->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Claims Admin</title>
+    <script type="text/javascript" src="/admin-web/dwr/engine.js"></script>
+    <script type="text/javascript" src="/admin-web/dwr/interface/ClaimLookup.js"></script>
+</h:head>
+<h:body>
+    <h:form id="claimForm">
+        <h:outputLabel for="cn" value="Claim number:"/>
+        <h:inputText id="cn" value="#{claimAdmin.claimNumber}"/>
+
+        <h:selectOneMenu value="#{claimAdmin.selectedStatus}">
+            <f:selectItems value="#{claimAdmin.statuses}" var="s"
+                           itemLabel="#{s}" itemValue="#{s}"/>
+        </h:selectOneMenu>
+
+        <h:commandButton value="Save" action="#{claimAdmin.save}"/>
+
+        <!-- DWR client call to be replaced with fetch('/api/lookup/claim/'+cn).
+             Note the id is "claimForm:cn": JSF prefixes child ids with the
+             enclosing form's id (NamingContainer behaviour). -->
+        <input type="button" value="Describe"
+               onclick="ClaimLookup.describe(document.getElementById('claimForm:cn').value,
+                        function(r){ alert(r); });"/>
+    </h:form>
+</h:body>
+</html>

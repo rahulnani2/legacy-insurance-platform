@@ -1,0 +1,7 @@
+com\acme\insurance\shared\SmokeMain.class
+com\acme\insurance\shared\util\LocalDateAdapter.class
+com\acme\insurance\shared\model\Party.class
+com\acme\insurance\shared\xml\JaxbSupport.class
+com\acme\insurance\shared\model\Claim.class
+com\acme\insurance\shared\model\Policy.class
+com\acme\insurance\shared\model\ClaimStatus.class

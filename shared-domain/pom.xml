@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.acme.insurance</groupId>
+        <artifactId>legacy-insurance-platform</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>shared-domain</artifactId>
+    <packaging>jar</packaging>
+    <name>Shared Domain (JAXB models)</name>
+
+    <dependencies>
+        <!--
+          LANDMINE: javax JAXB API. On Java 8 this also ships in the JDK, so the
+          dependency is half-redundant. On Java 11+ the JDK copy is GONE (JEP 320),
+          so the javax artifacts must become jakarta.xml.bind:jakarta.xml.bind-api
+          plus a runtime impl. Every downstream module inherits these models.
+        -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>${jaxb.api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>${jaxb.impl.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.acme.insurance.shared.SmokeMain</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

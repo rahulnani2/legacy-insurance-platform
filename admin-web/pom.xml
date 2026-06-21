@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.acme.insurance</groupId>
+        <artifactId>legacy-insurance-platform</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>admin-web</artifactId>
+    <packaging>war</packaging>
+    <name>Admin Web (Mojarra JSF 2.x / DWR)</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.acme.insurance</groupId>
+            <artifactId>shared-domain</artifactId>
+        </dependency>
+
+        <!--
+          LANDMINE [JSF]: Mojarra 2.3 = javax.faces. Jakarta Faces 4.0 = jakarta.faces,
+          new XML namespaces in faces-config + xhtml (xmlns ...jakarta.faces...), and the
+          javax.faces.bean.* managed-bean annotations are REMOVED (use CDI @Named/@ViewScoped).
+        -->
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.faces</artifactId>
+            <version>${mojarra.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--
+          LANDMINE [DWR]: Direct Web Remoting 3.0.2. There is NO jakarta-namespace DWR
+          release; the org.directwebremoting servlet + annotations bind to javax.servlet.
+          This cannot be "version bumped" — it must be REWRITTEN (expose the same lookups
+          as REST/JSON endpoints and replace the JS engine.js client calls).
+        -->
+        <dependency>
+            <groupId>org.directwebremoting</groupId>
+            <artifactId>dwr</artifactId>
+            <version>${dwr.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>admin-web</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <configuration>
+                    <webApp>
+                        <contextPath>/admin-web</contextPath>
+                    </webApp>
+                    <httpConnector>
+                        <port>8080</port>
+                    </httpConnector>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
