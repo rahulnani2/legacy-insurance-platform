@@ -141,10 +141,10 @@ Mark each item `[ ]` pending → `[~]` in-progress → `[x]` caught → `[!]` pa
 
 | # | Landmine | Status | Notes |
 |---|----------|--------|-------|
-| L7 | Spring Boot 2→3: bump `spring.boot.version` in parent pom; BOM import (not a parent inheritance — requires changing the BOM import version) | `[ ]` | Umbrella change; forces L8–L11 |
-| L8 | `javax.persistence.*` → `jakarta.persistence.*`; remove explicit `hibernate.version` pin (let Boot 3 manage Hibernate 6) | `[ ]` | |
-| L9 | `@Type(type="yes_no")` removed in Hibernate 6: replace with `AttributeConverter<Boolean,String>` + `@Convert` | `[ ]` | **Highest-value catch** — find/replace tools miss this; it's a semantic change |
-| L10 | Hibernate dialect: drop explicit `spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect` from application.properties (let Boot 3 auto-detect) | `[ ]` | |
+| L7 | Spring Boot 2→3: bump `spring.boot.version` in parent pom; BOM import (not a parent inheritance — requires changing the BOM import version) | `[x]` | 2.7.18 → 3.2.5 in parent pom |
+| L8 | `javax.persistence.*` → `jakarta.persistence.*`; remove explicit `hibernate.version` pin (let Boot 3 manage Hibernate 6) | `[x]` | ClaimEntity migrated; explicit hibernate-core dep removed |
+| L9 | `@Type(type="yes_no")` removed in Hibernate 6: replace with `AttributeConverter<Boolean,String>` + `@Convert` | `[x]` | Created YesNoConverter; @Type replaced with @Convert |
+| L10 | Hibernate dialect: drop explicit `spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect` from application.properties (let Boot 3 auto-detect) | `[x]` | Line removed |
 
 **Context to chain forward after Batch 3:**
 - Boot is on 3.x
@@ -215,6 +215,10 @@ Mark each item `[ ]` pending → `[~]` in-progress → `[x]` caught → `[!]` pa
 | 2026-06-21 | Batch 2 | CXF `3.5.5` → `4.0.5` | CXF 4.x = jakarta namespace |
 | 2026-06-21 | Batch 2 | Removed `javax.jws-api` + `jaxws-api` deps; CXF 4.x provides jakarta equivalents transitively | Cleaner dep tree |
 | 2026-06-21 | Batch 2 | Added `jakarta.xml.bind-api` as explicit dep in policy-soap-service | Needed for JAXB annotations on request/response beans |
+| 2026-06-21 | Batch 3 | Spring Boot `2.7.18` → `3.2.5` (BOM import in parent pom) | Umbrella change for jakarta namespace |
+| 2026-06-21 | Batch 3 | Removed explicit `hibernate.version` pin + `hibernate-core` dep | Let Boot 3 manage Hibernate 6 |
+| 2026-06-21 | Batch 3 | `@Type(type="yes_no")` → `YesNoConverter` (`AttributeConverter<Boolean,String>`) | Semantic rewrite required by Hibernate 6 |
+| 2026-06-21 | Batch 3 | Dropped explicit `hibernate.dialect` from application.properties | Boot 3 / Hibernate 6 auto-detects |
 
 ---
 
