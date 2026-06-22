@@ -1,13 +1,10 @@
 package com.acme.insurance.admin.bean;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Named;
 import java.io.Serializable;
 
-/**
- * LANDMINE [JSF]: javax.faces.bean.ManagedBean + RequestScoped (both removed in Faces 4).
- */
-@ManagedBean(name = "policyAdmin")
+@Named("policyAdmin")
 @RequestScoped
 public class PolicyAdminBean implements Serializable {
 
