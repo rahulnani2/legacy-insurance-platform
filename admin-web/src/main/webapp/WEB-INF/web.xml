@@ -21,6 +21,16 @@
     </servlet-mapping>
 
 
+    <!-- Claim lookup REST endpoint (replaces DWR) -->
+    <servlet>
+        <servlet-name>ClaimLookup</servlet-name>
+        <servlet-class>com.acme.insurance.admin.dwr.ClaimLookupRemote</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ClaimLookup</servlet-name>
+        <url-pattern>/api/lookup/claim/*</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>admin/claims.xhtml</welcome-file>
     </welcome-file-list>
