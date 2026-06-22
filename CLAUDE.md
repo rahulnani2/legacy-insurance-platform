@@ -198,7 +198,7 @@ Mark each item `[ ]` pending → `[~]` in-progress → `[x]` caught → `[!]` pa
 
 | # | Landmine | Status | Notes |
 |---|----------|--------|-------|
-| L13e | DWR → REST: **no jakarta release exists for DWR**; delete `dwr.xml` + DwrServlet mapping + engine.js/ClaimLookup.js script tags; expose `ClaimLookupRemote.describe()` as a JAX-RS/Spring MVC REST endpoint; replace inline `ClaimLookup.describe(...)` JS with `fetch()` | `[x]` | Rewritten as JAX-RS @Path endpoint; DWR fully removed |
+| L13e | DWR → REST: **no jakarta release exists for DWR**; delete `dwr.xml` + DwrServlet mapping + engine.js/ClaimLookup.js script tags; expose `ClaimLookupRemote.describe()` as a JAX-RS/Spring MVC REST endpoint; replace inline `ClaimLookup.describe(...)` JS with `fetch()` | `[x]` | Rewritten as plain HttpServlet (simpler than JAX-RS for single endpoint); registered in web.xml; JS uses fetch() with context path; DWR fully removed |
 
 ---
 
@@ -232,6 +232,15 @@ Mark each item `[ ]` pending → `[~]` in-progress → `[x]` caught → `[!]` pa
 | 2026-06-21 | Batch 6 | Deleted `dwr.xml`, removed DWR servlet from web.xml, removed DWR dep + `dwr.version` | Clean removal |
 | 2026-06-21 | Batch 6 | claims.xhtml: DWR script tags → inline `fetch()` calling REST endpoint | JS client rewrite |
 | 2026-06-21 | Batch 6 | Added `jakarta.ws.rs-api:3.1.0` dependency | JAX-RS API for REST endpoint |
+| 2026-06-21 | Smoke | CXF `4.0.5` → `4.1.1` | CXF-9034: 4.0.x incompatible with Jetty 12; IllegalAccessError at runtime |
+| 2026-06-21 | Smoke | Added `jakarta.servlet-api:6.0.0` to policy-soap-service | CXF Jetty transport needs servlet API at runtime (NoClassDefFoundError) |
+| 2026-06-21 | Smoke | Added `-parameters` to maven-compiler-plugin in parent pom | Spring Boot 3 / Framework 6 requires it for @PathVariable without explicit value |
+| 2026-06-21 | Smoke | Added `columnDefinition = "CHAR(1) DEFAULT 'N'"` to ClaimEntity.litigated | H2 ddl-auto created boolean column; YesNoConverter expected String |
+| 2026-06-21 | Smoke | Added `weld-servlet-shaded:5.1.2.Final` + `beans.xml` + Weld listener | Jetty doesn't ship CDI; @Named/@ViewScoped need a CDI container |
+| 2026-06-21 | Smoke | Rewrote ClaimLookupRemote from JAX-RS @Path to plain HttpServlet | No JAX-RS runtime in WAR; plain servlet simpler for single endpoint |
+| 2026-06-21 | Smoke | Removed `jakarta.ws.rs-api` dep from admin-web | No longer needed after HttpServlet rewrite |
+| 2026-06-21 | Smoke | Fixed fetch() URL to include context path (`/admin-web`) | Describe button returned 404 without context path prefix |
+| 2026-06-21 | Smoke | Created `messages.properties` bundle | faces-config.xml referenced it but file didn't exist → 500 error |
 
 ---
 
@@ -282,18 +291,18 @@ After all batches, score against `MIGRATION-ANSWER-KEY.md`:
 
 | ID | Description | Result |
 |----|-------------|--------|
-| L1 | JAXB API package move | |
-| L2 | JAXB runtime on classpath | |
-| L3 | CXF 3→4 | |
-| L4 | JAX-WS/JWS annotations | |
-| L5 | CXF factory false-negative | |
-| L6 | Request/response bean JAXB | |
-| L7 | Spring Boot 2→3 | |
-| L8 | javax.persistence→jakarta | |
-| L9 | @Type(type=...) rewrite | |
-| L10 | Hibernate dialect drop | |
-| L11 | Jasypt re-encrypt | |
-| L12 | XStream hardening | |
-| L13 | JSF+DWR rewrite | |
+| L1 | JAXB API package move | CAUGHT — all 7 files migrated `javax.xml.bind.*` → `jakarta.xml.bind.*` |
+| L2 | JAXB runtime on classpath | CAUGHT — `org.glassfish.jaxb:jaxb-runtime:4.0.5` added (runtime scope) |
+| L3 | CXF 3→4 | CAUGHT — `3.5.5` → `4.1.1` (bumped twice: 4.0.5 then 4.1.1 for Jetty 12 compat) |
+| L4 | JAX-WS/JWS annotations | CAUGHT — `javax.jws.*` → `jakarta.jws.*` in PolicyService + PolicyServiceImpl |
+| L5 | CXF factory false-negative | CAUGHT — flagged as "depends on L3+L4"; import unchanged but jakarta-backed |
+| L6 | Request/response bean JAXB | CAUGHT — `javax.xml.bind.*` → `jakarta.xml.bind.*` in request/response beans |
+| L7 | Spring Boot 2→3 | CAUGHT — BOM import `2.7.18` → `3.2.5` in parent pom (not parent version) |
+| L8 | javax.persistence→jakarta | CAUGHT — ClaimEntity migrated; explicit hibernate-core dep removed |
+| L9 | @Type(type=...) rewrite | CAUGHT — `YesNoConverter` (AttributeConverter) replaces `@Type(type="yes_no")` |
+| L10 | Hibernate dialect drop | CAUGHT — removed explicit `hibernate.dialect` from application.properties |
+| L11 | Jasypt re-encrypt | CAUGHT — algorithm → `PBEWITHHMACSHA512ANDAES_256` + `RandomIvGenerator`; ENC() re-encrypted |
+| L12 | XStream hardening | CAUGHT — explicit `allowTypes()` replaces `AnyTypePermission.ANY`; `--add-opens` JVM args added |
+| L13 | JSF+DWR rewrite | CAUGHT — CDI @Named/@ViewScoped, generic Converter, Faces 4 namespaces, DWR → HttpServlet + fetch(), Weld CDI container added |
 
 MISSED and PARTIAL rows = skill-library backlog before applying this to production.
