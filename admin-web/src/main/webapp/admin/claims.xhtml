@@ -13,7 +13,8 @@
     <script type="text/javascript">
         function describeClaim() {
             var cn = document.getElementById('claimForm:cn').value;
-            fetch('/api/lookup/claim/' + encodeURIComponent(cn))
+            var ctx = window.location.pathname.substring(0, window.location.pathname.indexOf('/', 1));
+            fetch(ctx + '/api/lookup/claim/' + encodeURIComponent(cn))
                 .then(function(r) { return r.text(); })
                 .then(function(text) { alert(text); });
         }
