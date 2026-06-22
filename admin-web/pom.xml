@@ -34,12 +34,11 @@
             <version>6.0.0</version>
             <scope>provided</scope>
         </dependency>
-        <!-- CDI API needed for @Named / @RequestScoped -->
+        <!-- CDI implementation (Weld) for @Named / @ViewScoped / @RequestScoped -->
         <dependency>
-            <groupId>jakarta.enterprise</groupId>
-            <artifactId>jakarta.enterprise.cdi-api</artifactId>
-            <version>4.0.1</version>
-            <scope>provided</scope>
+            <groupId>org.jboss.weld.servlet</groupId>
+            <artifactId>weld-servlet-shaded</artifactId>
+            <version>5.1.2.Final</version>
         </dependency>
 
         <!-- DWR removed — no jakarta release; rewritten as JAX-RS REST endpoint -->
