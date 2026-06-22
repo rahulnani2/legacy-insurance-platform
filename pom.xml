@@ -40,7 +40,7 @@
         <jasypt.spring.boot.version>3.0.5</jasypt.spring.boot.version>
         <xstream.version>1.4.20</xstream.version>
         <mojarra.version>4.0.7</mojarra.version>
-        <dwr.version>3.0.2-RELEASE</dwr.version>
+        <!-- dwr.version removed — DWR has no jakarta release; rewritten as REST -->
     </properties>
 
     <dependencyManagement>

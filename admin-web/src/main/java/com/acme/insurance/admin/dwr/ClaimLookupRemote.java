@@ -1,19 +1,22 @@
 package com.acme.insurance.admin.dwr;
 
-import org.directwebremoting.annotations.RemoteMethod;
-import org.directwebremoting.annotations.RemoteProxy;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 
 /**
- * LANDMINE [DWR — REWRITE, not bump]: org.directwebremoting annotations expose this
- * to browser JS via dwr/engine.js. No jakarta-compatible DWR exists. The migration is
- * a REWRITE: turn this into a REST controller (e.g. @GetMapping("/api/lookup/claim/{n}"))
- * and replace the generated DWR JS client calls in the xhtml with fetch()/AJAX.
+ * Replaces the DWR @RemoteProxy with a JAX-RS REST endpoint.
+ * DWR has no jakarta release — this is a REWRITE, not an upgrade.
  */
-@RemoteProxy(name = "ClaimLookup")
+@Path("/api/lookup/claim")
 public class ClaimLookupRemote {
 
-    @RemoteMethod
-    public String describe(String claimNumber) {
+    @GET
+    @Path("/{claimNumber}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String describe(@PathParam("claimNumber") String claimNumber) {
         if (claimNumber == null || claimNumber.trim().isEmpty()) {
             return "unknown";
         }
