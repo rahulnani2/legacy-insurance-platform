@@ -20,7 +20,8 @@ public class JasyptConfig {
         StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
         SimpleStringPBEConfig config = new SimpleStringPBEConfig();
         config.setPassword(System.getenv().getOrDefault("JASYPT_PASSWORD", "dev-master-key"));
-        config.setAlgorithm("PBEWithMD5AndDES");
+        config.setAlgorithm("PBEWITHHMACSHA512ANDAES_256");
+        config.setIvGeneratorClassName("org.jasypt.iv.RandomIvGenerator");
         config.setKeyObtentionIterations("1000");
         config.setPoolSize("1");
         config.setStringOutputType("base64");

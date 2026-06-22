@@ -37,7 +37,7 @@
         <jaxb.api.version>4.0.2</jaxb.api.version>
         <jaxb.runtime.version>4.0.5</jaxb.runtime.version>
         <jasypt.version>1.9.3</jasypt.version>
-        <jasypt.spring.boot.version>2.1.2</jasypt.spring.boot.version>
+        <jasypt.spring.boot.version>3.0.5</jasypt.spring.boot.version>
         <xstream.version>1.4.20</xstream.version>
         <mojarra.version>2.3.9</mojarra.version>
         <dwr.version>3.0.2-RELEASE</dwr.version>

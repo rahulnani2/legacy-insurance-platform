@@ -1,6 +1,8 @@
 package com.acme.insurance.claims.legacy;
 
 import com.acme.insurance.shared.model.Claim;
+import com.acme.insurance.shared.model.ClaimStatus;
+import com.acme.insurance.shared.model.Party;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 
@@ -21,8 +23,10 @@ public class XStreamClaimArchiver {
     }
 
     private void setupSecurity(XStream xs) {
-        // Legacy permissive setup — flagged for tightening during migration.
-        xs.addPermission(com.thoughtworks.xstream.security.AnyTypePermission.ANY);
+        // Hardened: explicit allow-list replaces AnyTypePermission.ANY
+        xs.allowTypes(new Class[]{Claim.class, ClaimStatus.class, Party.class});
+        xs.allowTypeHierarchy(java.math.BigDecimal.class);
+        xs.allowTypeHierarchy(java.time.LocalDate.class);
     }
 
     public String archive(Claim claim) {
