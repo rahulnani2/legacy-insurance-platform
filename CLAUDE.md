@@ -163,8 +163,8 @@ Mark each item `[ ]` pending → `[~]` in-progress → `[x]` caught → `[!]` pa
 
 | # | Landmine | Status | Notes |
 |---|----------|--------|-------|
-| L11 | Jasypt: bump starter to 3.x (Boot 3 compatible); switch algorithm from `PBEWithMD5AndDES` to `PBEWITHHMACSHA512ANDAES_256`; re-encrypt the `ENC(...)` value in application.properties under the new algorithm | `[ ]` | Old ciphertext won't decrypt under new algorithm — re-encrypt step is often missed |
-| L12 | XStream: bump to current; replace `AnyTypePermission.ANY` with explicit `allowTypes()`/`allowTypeHierarchy()`; add `--add-opens` JVM args where reflective access remains | `[ ]` | `InaccessibleObjectException` on JDK 17 internal types |
+| L11 | Jasypt: bump starter to 3.x (Boot 3 compatible); switch algorithm from `PBEWithMD5AndDES` to `PBEWITHHMACSHA512ANDAES_256`; re-encrypt the `ENC(...)` value in application.properties under the new algorithm | `[x]` | Starter 3.0.5; algorithm + IV generator updated; ENC() re-encrypted |
+| L12 | XStream: bump to current; replace `AnyTypePermission.ANY` with explicit `allowTypes()`/`allowTypeHierarchy()`; add `--add-opens` JVM args where reflective access remains | `[x]` | Explicit allowTypes for Claim/ClaimStatus/Party; --add-opens in spring-boot-maven-plugin |
 
 ---
 
@@ -219,6 +219,10 @@ Mark each item `[ ]` pending → `[~]` in-progress → `[x]` caught → `[!]` pa
 | 2026-06-21 | Batch 3 | Removed explicit `hibernate.version` pin + `hibernate-core` dep | Let Boot 3 manage Hibernate 6 |
 | 2026-06-21 | Batch 3 | `@Type(type="yes_no")` → `YesNoConverter` (`AttributeConverter<Boolean,String>`) | Semantic rewrite required by Hibernate 6 |
 | 2026-06-21 | Batch 3 | Dropped explicit `hibernate.dialect` from application.properties | Boot 3 / Hibernate 6 auto-detects |
+| 2026-06-21 | Batch 4 | Jasypt starter `2.1.2` → `3.0.5`; algorithm `PBEWithMD5AndDES` → `PBEWITHHMACSHA512ANDAES_256` + `RandomIvGenerator` | Boot 3 compatible; stronger encryption |
+| 2026-06-21 | Batch 4 | Re-encrypted `ENC()` value in application.properties under new algorithm | Old ciphertext invalid under new algo |
+| 2026-06-21 | Batch 4 | XStream: `AnyTypePermission.ANY` → explicit `allowTypes()` + `allowTypeHierarchy()` | Security hardening for JDK 17 |
+| 2026-06-21 | Batch 4 | Added `--add-opens` JVM args in spring-boot-maven-plugin | XStream reflective access on JDK 17 |
 
 ---
 
