@@ -2,10 +2,10 @@ package com.acme.insurance.policy.ws;
 
 import com.acme.insurance.shared.model.Policy;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 /** LANDMINE [JAXB]: SOAP response wrapping a shared-domain Policy. */
 @XmlRootElement(name = "policyQuoteResponse")

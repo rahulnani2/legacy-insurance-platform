@@ -3,7 +3,7 @@ package com.acme.insurance.policy.ws;
 import com.acme.insurance.shared.model.Party;
 import com.acme.insurance.shared.model.Policy;
 
-import javax.jws.WebService;
+import jakarta.jws.WebService;
 import java.math.BigDecimal;
 import java.util.UUID;
 

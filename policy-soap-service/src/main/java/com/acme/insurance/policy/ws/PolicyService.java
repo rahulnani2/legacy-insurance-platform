@@ -1,9 +1,9 @@
 package com.acme.insurance.policy.ws;
 
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
-import javax.jws.WebResult;
-import javax.jws.WebService;
+import jakarta.jws.WebMethod;
+import jakarta.jws.WebParam;
+import jakarta.jws.WebResult;
+import jakarta.jws.WebService;
 
 /**
  * LANDMINE [CXF/JAX-WS]: javax.jws.WebService SEI.
