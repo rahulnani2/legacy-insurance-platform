@@ -39,7 +39,7 @@ public class ClaimEntity {
     private String status;
 
     @Convert(converter = YesNoConverter.class)
-    @Column(name = "litigated")
+    @Column(name = "litigated", columnDefinition = "CHAR(1) DEFAULT 'N'")
     private boolean litigated;
 
     @CreationTimestamp
