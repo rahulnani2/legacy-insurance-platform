@@ -27,15 +27,15 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- BASELINE: this whole reactor must build green on JDK 8 before you touch anything. -->
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
 
         <!-- Every version below is pinned old on purpose. See MIGRATION-ANSWER-KEY.md. -->
         <spring.boot.version>2.7.18</spring.boot.version>
         <cxf.version>3.5.5</cxf.version>
         <hibernate.version>5.6.15.Final</hibernate.version>
-        <jaxb.api.version>2.3.1</jaxb.api.version>
-        <jaxb.impl.version>2.3.3</jaxb.impl.version>
+        <jaxb.api.version>4.0.2</jaxb.api.version>
+        <jaxb.runtime.version>4.0.5</jaxb.runtime.version>
         <jasypt.version>1.9.3</jasypt.version>
         <jasypt.spring.boot.version>2.1.2</jasypt.spring.boot.version>
         <xstream.version>1.4.20</xstream.version>

@@ -1,6 +1,0 @@
-com\acme\insurance\policy\ws\PolicyServiceImpl.class
-com\acme\insurance\policy\ws\PolicyQuoteRequest.class
-com\acme\insurance\policy\ws\PolicyQuoteResponse.class
-com\acme\insurance\policy\ws\PolicyService.class
-com\acme\insurance\policy\config\PolicyEndpointPublisher.class
-com\acme\insurance\policy\SmokeMain.class
