@@ -119,10 +119,10 @@ Mark each item `[ ]` pending → `[~]` in-progress → `[x]` caught → `[!]` pa
 
 | # | Landmine | Status | Notes |
 |---|----------|--------|-------|
-| L3 | CXF bump: `cxf.version` 3.5.x → 4.x in pom | `[ ]` | Necessary but not sufficient on its own |
-| L4 | JAX-WS/JWS: `javax.jws.*` → `jakarta.jws.*`; `javax.xml.ws.*` → `jakarta.xml.ws.*` | `[ ]` | In PolicyService + PolicyServiceImpl |
-| L5 | CXF false-negative: `JaxWsServerFactoryBean` class name unchanged between CXF 3 and 4 — no import edit needed but only correct once L3+L4 are done | `[ ]` | Flag as "depends on L3+L4" not "clean" |
-| L6 | JAXB on request/response beans: same `javax→jakarta` move as L1, in this module's beans | `[ ]` | Use decisions from Batch 1 (jakarta + glassfish runtime) |
+| L3 | CXF bump: `cxf.version` 3.5.x → 4.x in pom | `[x]` | 3.5.5 → 4.0.5 in parent pom |
+| L4 | JAX-WS/JWS: `javax.jws.*` → `jakarta.jws.*`; `javax.xml.ws.*` → `jakarta.xml.ws.*` | `[x]` | PolicyService + PolicyServiceImpl migrated; old javax.jws-api/jaxws-api deps removed (CXF 4.x provides transitively) |
+| L5 | CXF false-negative: `JaxWsServerFactoryBean` class name unchanged between CXF 3 and 4 — no import edit needed but only correct once L3+L4 are done | `[x]` | Flagged: import unchanged, but now backed by CXF 4.x + jakarta; depends on L3+L4 |
+| L6 | JAXB on request/response beans: same `javax→jakarta` move as L1, in this module's beans | `[x]` | PolicyQuoteRequest + PolicyQuoteResponse migrated; jakarta.xml.bind-api added as explicit dep |
 
 **Context to chain forward after Batch 2:**
 - CXF is on 4.x; jakarta-linked
@@ -212,6 +212,9 @@ Mark each item `[ ]` pending → `[~]` in-progress → `[x]` caught → `[!]` pa
 | 2026-06-21 | Batch 1 | JAXB API: `jakarta.xml.bind:jakarta.xml.bind-api:4.0.2` | Standard Jakarta XML Binding 4.0 API |
 | 2026-06-21 | Batch 1 | JAXB runtime: `org.glassfish.jaxb:jaxb-runtime:4.0.5` (runtime scope) | Reference implementation for Jakarta XML Binding 4.0 |
 | 2026-06-21 | Batch 1 | `maven.compiler.source/target` → `17` in parent pom | Required for JDK 17 compilation |
+| 2026-06-21 | Batch 2 | CXF `3.5.5` → `4.0.5` | CXF 4.x = jakarta namespace |
+| 2026-06-21 | Batch 2 | Removed `javax.jws-api` + `jaxws-api` deps; CXF 4.x provides jakarta equivalents transitively | Cleaner dep tree |
+| 2026-06-21 | Batch 2 | Added `jakarta.xml.bind-api` as explicit dep in policy-soap-service | Needed for JAXB annotations on request/response beans |
 
 ---
 

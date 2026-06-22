@@ -32,7 +32,7 @@
 
         <!-- Every version below is pinned old on purpose. See MIGRATION-ANSWER-KEY.md. -->
         <spring.boot.version>2.7.18</spring.boot.version>
-        <cxf.version>3.5.5</cxf.version>
+        <cxf.version>4.0.5</cxf.version>
         <hibernate.version>5.6.15.Final</hibernate.version>
         <jaxb.api.version>4.0.2</jaxb.api.version>
         <jaxb.runtime.version>4.0.5</jaxb.runtime.version>
