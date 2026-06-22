@@ -31,9 +31,9 @@
         <maven.compiler.target>17</maven.compiler.target>
 
         <!-- Every version below is pinned old on purpose. See MIGRATION-ANSWER-KEY.md. -->
-        <spring.boot.version>2.7.18</spring.boot.version>
+        <spring.boot.version>3.2.5</spring.boot.version>
         <cxf.version>4.0.5</cxf.version>
-        <hibernate.version>5.6.15.Final</hibernate.version>
+        <!-- hibernate.version removed — let Boot 3 manage Hibernate 6 -->
         <jaxb.api.version>4.0.2</jaxb.api.version>
         <jaxb.runtime.version>4.0.5</jaxb.runtime.version>
         <jasypt.version>1.9.3</jasypt.version>

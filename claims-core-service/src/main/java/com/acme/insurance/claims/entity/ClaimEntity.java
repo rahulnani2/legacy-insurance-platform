@@ -1,14 +1,14 @@
 package com.acme.insurance.claims.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.Instant;
 
@@ -38,8 +38,7 @@ public class ClaimEntity {
     @Column(name = "status")
     private String status;
 
-    // Hibernate 5 legacy boolean mapping; @Type(type="yes_no") removed in Hibernate 6.
-    @Type(type = "yes_no")
+    @Convert(converter = YesNoConverter.class)
     @Column(name = "litigated")
     private boolean litigated;
 

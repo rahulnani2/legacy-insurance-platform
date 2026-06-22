@@ -64,16 +64,7 @@
             <version>${xstream.version}</version>
         </dependency>
 
-        <!--
-          LANDMINE [Hibernate]: pin Hibernate 5.6 explicitly (overrides the Boot-managed
-          version). 5.x is javax.persistence; Hibernate 6 is jakarta.persistence AND
-          changes @Type, dialect resolution, and id-generator defaults.
-        -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
+        <!-- Hibernate 6 now managed by Boot 3 via spring-boot-starter-data-jpa -->
     </dependencies>
 
     <build>
