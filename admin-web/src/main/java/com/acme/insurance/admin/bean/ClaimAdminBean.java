@@ -2,19 +2,13 @@ package com.acme.insurance.admin.bean;
 
 import com.acme.insurance.shared.model.ClaimStatus;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * LANDMINE [JSF]: javax.faces.bean.ManagedBean + javax.faces.bean.ViewScoped.
- * Both annotations are REMOVED in Jakarta Faces 4. Migration = CDI:
- *   @javax.faces.bean.ManagedBean  -> @jakarta.inject.Named
- *   @javax.faces.bean.ViewScoped   -> @jakarta.faces.view.ViewScoped (note: different package!)
- */
-@ManagedBean(name = "claimAdmin")
+@Named("claimAdmin")
 @ViewScoped
 public class ClaimAdminBean implements Serializable {
 

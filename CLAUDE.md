@@ -181,10 +181,10 @@ Mark each item `[ ]` pending → `[~]` in-progress → `[x]` caught → `[!]` pa
 
 | # | Landmine | Status | Notes |
 |---|----------|--------|-------|
-| L13a | JSF managed beans: `@ManagedBean`/`@ViewScoped`/`@RequestScoped` (javax.faces.bean) → CDI `@Named` + `@jakarta.faces.view.ViewScoped` / `@jakarta.enterprise.context.RequestScoped` | `[ ]` | Note: ViewScoped is in `jakarta.faces.view`, NOT `jakarta.enterprise.context` |
-| L13b | Converter: `javax.faces.convert.Converter` (raw) → `jakarta.faces.convert.Converter<T>` (generic); update method signatures | `[ ]` | Package AND signature change |
-| L13c | XML descriptors: update `xmlns` namespaces in web.xml (servlet 3.1→6.0), faces-config.xml (2.2→4.0); remove `<managed-bean>` blocks | `[ ]` | |
-| L13d | XHTML taglib URIs: `http://java.sun.com/jsf/*` → `jakarta.faces.*` in claims.xhtml | `[ ]` | |
+| L13a | JSF managed beans: `@ManagedBean`/`@ViewScoped`/`@RequestScoped` (javax.faces.bean) → CDI `@Named` + `@jakarta.faces.view.ViewScoped` / `@jakarta.enterprise.context.RequestScoped` | `[x]` | ClaimAdminBean + PolicyAdminBean migrated to CDI |
+| L13b | Converter: `javax.faces.convert.Converter` (raw) → `jakarta.faces.convert.Converter<T>` (generic); update method signatures | `[x]` | MoneyConverter now Converter<BigDecimal> with typed signatures |
+| L13c | XML descriptors: update `xmlns` namespaces in web.xml (servlet 3.1→6.0), faces-config.xml (2.2→4.0); remove `<managed-bean>` blocks | `[x]` | Both updated; managed-bean block removed |
+| L13d | XHTML taglib URIs: `http://java.sun.com/jsf/*` → `jakarta.faces.*` in claims.xhtml | `[x]` | h: and f: URIs updated |
 
 ---
 
@@ -223,6 +223,11 @@ Mark each item `[ ]` pending → `[~]` in-progress → `[x]` caught → `[!]` pa
 | 2026-06-21 | Batch 4 | Re-encrypted `ENC()` value in application.properties under new algorithm | Old ciphertext invalid under new algo |
 | 2026-06-21 | Batch 4 | XStream: `AnyTypePermission.ANY` → explicit `allowTypes()` + `allowTypeHierarchy()` | Security hardening for JDK 17 |
 | 2026-06-21 | Batch 4 | Added `--add-opens` JVM args in spring-boot-maven-plugin | XStream reflective access on JDK 17 |
+| 2026-06-21 | Batch 5 | Mojarra `2.3.9` → `4.0.7` (`org.glassfish:jakarta.faces`); Servlet API → `jakarta.servlet-api:6.0.0`; added CDI API `4.0.1` | Jakarta Faces 4 stack |
+| 2026-06-21 | Batch 5 | `@ManagedBean`/`@ViewScoped`/`@RequestScoped` → CDI `@Named` + jakarta scopes | Faces 4 removes javax.faces.bean annotations |
+| 2026-06-21 | Batch 5 | `Converter` (raw) → `Converter<BigDecimal>` (generic) with jakarta.faces package | Package + signature change |
+| 2026-06-21 | Batch 5 | web.xml servlet 6.0, faces-config.xml 4.0, XHTML taglib URIs → jakarta.faces.* | XML namespace updates |
+| 2026-06-21 | Batch 5 | Jetty `9.4.x` → `11.0.20` in parent pom | Jakarta servlet compatibility |
 
 ---
 

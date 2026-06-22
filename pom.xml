@@ -39,7 +39,7 @@
         <jasypt.version>1.9.3</jasypt.version>
         <jasypt.spring.boot.version>3.0.5</jasypt.spring.boot.version>
         <xstream.version>1.4.20</xstream.version>
-        <mojarra.version>2.3.9</mojarra.version>
+        <mojarra.version>4.0.7</mojarra.version>
         <dwr.version>3.0.2-RELEASE</dwr.version>
     </properties>
 
@@ -90,7 +90,7 @@
                 <plugin>
                     <groupId>org.eclipse.jetty</groupId>
                     <artifactId>jetty-maven-plugin</artifactId>
-                    <version>9.4.53.v20231009</version>
+                    <version>11.0.20</version>
                 </plugin>
             </plugins>
         </pluginManagement>
