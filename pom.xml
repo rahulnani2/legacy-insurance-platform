@@ -32,7 +32,7 @@
 
         <!-- Every version below is pinned old on purpose. See MIGRATION-ANSWER-KEY.md. -->
         <spring.boot.version>3.2.5</spring.boot.version>
-        <cxf.version>4.0.5</cxf.version>
+        <cxf.version>4.1.1</cxf.version>
         <!-- hibernate.version removed — let Boot 3 manage Hibernate 6 -->
         <jaxb.api.version>4.0.2</jaxb.api.version>
         <jaxb.runtime.version>4.0.5</jaxb.runtime.version>

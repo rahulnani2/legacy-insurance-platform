@@ -34,6 +34,12 @@
             <version>${cxf.version}</version>
         </dependency>
         <!-- Jakarta JAX-WS/JWS APIs now provided transitively by CXF 4.x -->
+        <!-- Jakarta Servlet API needed at runtime by CXF Jetty transport -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.0.0</version>
+        </dependency>
         <!-- Jakarta JAXB API needed for @XmlRootElement etc. on request/response beans -->
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
