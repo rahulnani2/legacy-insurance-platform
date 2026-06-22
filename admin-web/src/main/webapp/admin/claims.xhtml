@@ -10,8 +10,14 @@
       xmlns:f="jakarta.faces.core">
 <h:head>
     <title>Claims Admin</title>
-    <script type="text/javascript" src="/admin-web/dwr/engine.js"></script>
-    <script type="text/javascript" src="/admin-web/dwr/interface/ClaimLookup.js"></script>
+    <script type="text/javascript">
+        function describeClaim() {
+            var cn = document.getElementById('claimForm:cn').value;
+            fetch('/api/lookup/claim/' + encodeURIComponent(cn))
+                .then(function(r) { return r.text(); })
+                .then(function(text) { alert(text); });
+        }
+    </script>
 </h:head>
 <h:body>
     <h:form id="claimForm">
@@ -25,12 +31,7 @@
 
         <h:commandButton value="Save" action="#{claimAdmin.save}"/>
 
-        <!-- DWR client call to be replaced with fetch('/api/lookup/claim/'+cn).
-             Note the id is "claimForm:cn": JSF prefixes child ids with the
-             enclosing form's id (NamingContainer behaviour). -->
-        <input type="button" value="Describe"
-               onclick="ClaimLookup.describe(document.getElementById('claimForm:cn').value,
-                        function(r){ alert(r); });"/>
+        <input type="button" value="Describe" onclick="describeClaim();"/>
     </h:form>
 </h:body>
 </html>

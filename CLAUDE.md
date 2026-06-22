@@ -198,7 +198,7 @@ Mark each item `[ ]` pending → `[~]` in-progress → `[x]` caught → `[!]` pa
 
 | # | Landmine | Status | Notes |
 |---|----------|--------|-------|
-| L13e | DWR → REST: **no jakarta release exists for DWR**; delete `dwr.xml` + DwrServlet mapping + engine.js/ClaimLookup.js script tags; expose `ClaimLookupRemote.describe()` as a JAX-RS/Spring MVC REST endpoint; replace inline `ClaimLookup.describe(...)` JS with `fetch()` | `[ ]` | This is a REWRITE, not an upgrade — flag it explicitly |
+| L13e | DWR → REST: **no jakarta release exists for DWR**; delete `dwr.xml` + DwrServlet mapping + engine.js/ClaimLookup.js script tags; expose `ClaimLookupRemote.describe()` as a JAX-RS/Spring MVC REST endpoint; replace inline `ClaimLookup.describe(...)` JS with `fetch()` | `[x]` | Rewritten as JAX-RS @Path endpoint; DWR fully removed |
 
 ---
 
@@ -228,6 +228,10 @@ Mark each item `[ ]` pending → `[~]` in-progress → `[x]` caught → `[!]` pa
 | 2026-06-21 | Batch 5 | `Converter` (raw) → `Converter<BigDecimal>` (generic) with jakarta.faces package | Package + signature change |
 | 2026-06-21 | Batch 5 | web.xml servlet 6.0, faces-config.xml 4.0, XHTML taglib URIs → jakarta.faces.* | XML namespace updates |
 | 2026-06-21 | Batch 5 | Jetty `9.4.x` → `11.0.20` in parent pom | Jakarta servlet compatibility |
+| 2026-06-21 | Batch 6 | DWR rewrite: `ClaimLookupRemote` → JAX-RS `@Path`/`@GET` endpoint | No jakarta DWR exists — full rewrite |
+| 2026-06-21 | Batch 6 | Deleted `dwr.xml`, removed DWR servlet from web.xml, removed DWR dep + `dwr.version` | Clean removal |
+| 2026-06-21 | Batch 6 | claims.xhtml: DWR script tags → inline `fetch()` calling REST endpoint | JS client rewrite |
+| 2026-06-21 | Batch 6 | Added `jakarta.ws.rs-api:3.1.0` dependency | JAX-RS API for REST endpoint |
 
 ---
 

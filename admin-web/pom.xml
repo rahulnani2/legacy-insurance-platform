@@ -42,16 +42,12 @@
             <scope>provided</scope>
         </dependency>
 
-        <!--
-          LANDMINE [DWR]: Direct Web Remoting 3.0.2. There is NO jakarta-namespace DWR
-          release; the org.directwebremoting servlet + annotations bind to javax.servlet.
-          This cannot be "version bumped" — it must be REWRITTEN (expose the same lookups
-          as REST/JSON endpoints and replace the JS engine.js client calls).
-        -->
+        <!-- DWR removed — no jakarta release; rewritten as JAX-RS REST endpoint -->
         <dependency>
-            <groupId>org.directwebremoting</groupId>
-            <artifactId>dwr</artifactId>
-            <version>${dwr.version}</version>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
